@@ -10,13 +10,9 @@ baseURL = "https://openexchangerates.org/api/"
 
 # First we want to test if our token works, and whether it was found by our main file
 # by sending a simple request and check we get a code 200.
-# The /convert endpoint is as good as any to start with.
+# The /latest.json endpoint is as good as any to start with.
 
-response = requests.get(baseURL + "convert/1/EUR/USD?app_id=" + APP_ID)
-data = response.json()
-print("Status code:", response.status_code, data["message"], data["description"])
+response = requests.get(baseURL + "latest.json?app_id=" + APP_ID)
 
-print("Content type:", response.headers.get())
-
-
-print("Answer to query (1 Euro equals):", data["response", "USD"])
+print("Status code:", response.status_code)
+print("Base currency of query:", response.headers)
