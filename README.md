@@ -1,33 +1,33 @@
-💱<h3 NAME OF PROJECT>
+💱 # currency-api-tests
 ---
 3-5 line description
 <br>
-🧰<h3 Technologies>
+🧰 ## Technologies
 ---
 - unordered
 - list
 <br>
-📋<h3 Features>
+📋 ## Features
 ---
 - unordered
 - list
 <br>
-🧑‍🍳<h3 Process>
+🧑‍🍳 ## Process
 ---
 
 <br>
-📚<h3 Learning outcomes>
+📚 ## Learning outcomes
 ---
 
 <br>
-💭<h3 How can it be improved?>
+💭 ## How can it be improved?
 ---
 
 <br>
-🚦<h3 Running it>
+🚦 ## Running it
 ---
 
 <br>
-🍿<h3 Demo>
+🍿 ## Demo
 ---
 <img src="" width="800" height="640" alt="To be created"/>
