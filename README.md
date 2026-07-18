@@ -1,11 +1,14 @@
 💱 # currency-api-tests
 ---
-3-5 line description
+In this first QA automation project I will focus on communicating with an API: [Open Excehange Rates](https://openexchangerates.org).
+After checking for various possible error codes, I will explore various endpoints this API has to offer.
+I start by testing with `assert` directly in `client.py`, then, under `tests/test_client.py`, I implement pytest for the first time.
 
 🧰 Technologies
 --- 
-* unordered
-* list
+Tech stack is Python-based. The most important modules are:
+* requests
+* pytest
 
 📋 Features  
 ---
@@ -14,15 +17,25 @@
 
 🧑‍🍳 Process
 ---
-
+* After sorting out the project initial steps (cf. next section), I started a simple check on `/latest.json` to check the happy path,
+and ensuring the API token was valid.
+* 
 
 📚 Learning outcomes
 ---
-
+* I had to remember how to setup a project using Git and set up a virtual environment with venv.
+* Adding an API key in the .env file to the first commit of the project meant that even if .gitignore was staged, and .env was in it,
+it meant that .env was committed and the API key was open for all to see. It is probably a right of passage for many developers,
+and at least I immediately reacted when seeing the results of that on my public Github repo. I nullified that API key and reuested a new one,
+then delete the Github repo, as I was only one commit in.
+* To not have to deal with this in the future and with the help of a chatbot, I prepared a shell script that takes a string as an argument (the project name),
+then initialises the project with the most basic elements of a skeleton structure. It ensures the .gitignore with typical values is included in the first commit.
+I can then start to think about future dependencies and secret keys that will be needed for the project.
 
 💭 How can it be improved?
 ---
-
+* The free version of the API being limited to 1000 HTTP requests/month, the `/time-series.json` endpoint would go through that allowance very quickly,
+and so could not be tested.
 
 🚦 Running it
 ---
