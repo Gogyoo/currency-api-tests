@@ -1,33 +1,33 @@
 💱 # currency-api-tests
 ---
 3-5 line description
-<br>
-🧰 ## Technologies
+
+🧰 Technologies
+--- 
+* unordered
+* list
+
+📋 Features  
 ---
-- unordered
-- list
-<br>
-📋 ## Features
----
-- unordered
-- list
-<br>
-🧑‍🍳 ## Process
+* unordered
+* list
+
+🧑‍🍳 Process
 ---
 
-<br>
-📚 ## Learning outcomes
+
+📚 Learning outcomes
 ---
 
-<br>
-💭 ## How can it be improved?
+
+💭 How can it be improved?
 ---
 
-<br>
-🚦 ## Running it
+
+🚦 Running it
 ---
 
-<br>
-🍿 ## Demo
+
+🍿 Demo
 ---
 <img src="" width="800" height="640" alt="To be created"/>
