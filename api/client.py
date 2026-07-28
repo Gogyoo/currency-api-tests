@@ -18,5 +18,8 @@ def happy_path():
 
     assert happy_response.status_code == 200
     assert happy_response.elapsed.total_seconds() < 1
+    #assert isinstance(latest_json, dict)
+    #assert ["GBP", "EUR", "JPY"] in latest_json["rates"]
+    print("✅ Happy path test passed successfully!")
 
 happy_path()
