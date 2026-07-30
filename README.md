@@ -1,4 +1,4 @@
-💱 # currency-api-tests
+💱 currency-api-tests
 ---
 In this first QA automation project I will focus on communicating with an API: [Open Exchange Rates](https://openexchangerates.org).
 I start by testing with `assert` directly in `client.py`, then, under `tests/test_client.py`, I implement pytest for the first time.
@@ -16,8 +16,7 @@ Tech stack is Python-based. The most important modules are:
 
 🧑‍🍳 Process
 ---
-* After sorting out the initial steps of the project (cf. next section), I started a simple check on `/latest.json` to check the happy path,
-and ensuring the API token was valid.
+* After sorting out the initial steps of the project (cf. next section), I started a simple check on `/latest.json` to check the happy path, making sure the API token was valid, and perform simple data validation tests.
 * 
 
 📚 Learning outcomes

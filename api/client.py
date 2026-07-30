@@ -3,12 +3,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 APP_ID = os.getenv("APP_ID")
+INACTIVE_ID = os.getenv("INACTIVE_ID")
 
 baseURL = "https://openexchangerates.org/api/"
 params = {"app_id": APP_ID}
 
 def happy_path():
-    """First we want to test if our token works, we get a code 200,
+    """_summary_
+    First we want to test if our token works, we get a code 200,
     and a few other checks that makes sense for our happy path.
     The /latest.json endpoint is the simplest one to start with."""
 
@@ -28,4 +30,12 @@ def happy_path():
         assert len(curr) == 3
     print("✅ Happy path test passed successfully!")
 
-happy_path()
+def wrong_token():
+    try:
+        depr_token = requests.get(f"{baseURL}latest.json?app_id={INACTIVE_ID}")
+        depr_token.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+
+#happy_path()
+wrong_token()
