@@ -1,5 +1,4 @@
-import os
-import requests
+import os, requests, json
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -16,10 +15,12 @@ def happy_path():
     happy_response = requests.get(f"{baseURL}latest.json", params=params)
     latest_json = happy_response.json()
 
+    #print(json.dumps(latest_json, indent=4))
     assert happy_response.status_code == 200
     assert happy_response.elapsed.total_seconds() < 1
-    #assert isinstance(latest_json, dict)
-    #assert ["GBP", "EUR", "JPY"] in latest_json["rates"]
+    assert isinstance(latest_json, dict)
+    assert "timestamp" and "base" and "rates" in latest_json
+    assert "GBP" and "EUR" and "JPY" in latest_json["rates"]
     print("✅ Happy path test passed successfully!")
 
 happy_path()
