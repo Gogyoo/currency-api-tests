@@ -36,6 +36,21 @@ def wrong_token():
         depr_token.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
+    try:
+        null_token = requests.get(f"{baseURL}latest.json?app_id=")
+        null_token.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+
+def wrong_endpoint():
+    try:
+        depr_token = requests.get(f"{baseURL}ananas.json?app_id={APP_ID}")
+        depr_token.raise_for_status()
+
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+
 
 #happy_path()
-wrong_token()
+#wrong_token()
+wrong_endpoint()
