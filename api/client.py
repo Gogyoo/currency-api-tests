@@ -21,6 +21,11 @@ def happy_path():
     assert isinstance(latest_json, dict)
     assert "timestamp" and "base" and "rates" in latest_json
     assert "GBP" and "EUR" and "JPY" in latest_json["rates"]
+    #data validation
+    assert latest_json["rates"]["GBP"] <= 1.2 and latest_json["rates"]["GBP"] >= 0.4
+    assert len(latest_json["rates"]) > 100
+    for curr in latest_json["rates"]:
+        assert len(curr) == 3
     print("✅ Happy path test passed successfully!")
 
 happy_path()
