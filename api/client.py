@@ -30,7 +30,7 @@ def happy_path():
         assert len(curr) == 3
     print("✅ Happy path test passed successfully!")
 
-def wrong_token():
+def token():
     try:
         depr_token = requests.get(f"{baseURL}latest.json?app_id={INACTIVE_ID}")
         depr_token.raise_for_status()
@@ -42,15 +42,38 @@ def wrong_token():
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
 
-def wrong_endpoint():
+def endpoint():
     try:
-        depr_token = requests.get(f"{baseURL}ananas.json?app_id={APP_ID}")
-        depr_token.raise_for_status()
+        fake_endpoint = requests.get(f"{baseURL}ananas.json?app_id={APP_ID}")
+        fake_endpoint.raise_for_status()
 
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
 
+def subscription():
+    # The /ohlc endpoint should only be available to premium members of the API.
+    # For this project we only use the free tier.
+    try:
+        subscr = requests.get(f"{baseURL}ohlc.json?app_id={APP_ID}")
+        subscr.raise_for_status()
+        print("Welcome to the VIP Platinum tier!")
+
+    except requests.exceptions.RequestException as e:
+        print("Welcome to the VIP Platinum tier!")
+        print(f"Request failed: {e}")
+
+def base():
+    # Same with changing the base currency rates will be returned at.
+    try:
+        invalid_base = requests.get(f"{baseURL}latest.json?app_id={APP_ID}&base=EUR")
+        invalid_base.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print("This option is only extended to subscribers of the",
+        "Developer, Enterprise and Unlimited plans.")
+        print(f"Request failed: {e}")
 
 #happy_path()
-#wrong_token()
-wrong_endpoint()
+#token()
+#endpoint()
+#subscription()
+base()
