@@ -17,7 +17,8 @@ Tech stack is Python-based. The most important modules are:
 🧑‍🍳 Process
 ---
 * After sorting out the initial steps of the project (cf. next section), I started a simple check on `/latest.json` to check the happy path, making sure the API token was valid, and perform simple data validation tests.
-* 
+* Then came the time for negative testing, like what would happen if no token was passed in the request, or if subscription plan X is needed for endpoint Y.
+* Of particular interest is the function `malformed()`, where I intentionally tested mispelled e.g. `ap_d=` as an argument, or omitted the s in `https`. However, no error was raised, and the program was allowed to finish, so there is potential for better error detection by the dev team here.
 
 📚 Learning outcomes
 ---

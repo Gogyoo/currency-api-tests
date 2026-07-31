@@ -28,6 +28,13 @@ def happy_path():
     assert len(latest_json["rates"]) > 100
     for curr in latest_json["rates"]:
         assert len(curr) == 3
+    
+    forbidden = ["password",
+                    "secret",
+                    "token",
+                    "api_key"]
+    for i in forbidden:
+        assert i not in happy_response.text.lower()
     print("✅ Happy path test passed successfully!")
 
 def token():
@@ -72,8 +79,18 @@ def base():
         "Developer, Enterprise and Unlimited plans.")
         print(f"Request failed: {e}")
 
+def malformed():
+    try:
+        mal = requests.get(f"http://openexchangerates.org/latest.json?ap_d={APP_ID}&")
+        mal.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+
+
 #happy_path()
+#TODO: maybe group all try/except blocks in one negative_testing function?
 #token()
 #endpoint()
 #subscription()
-base()
+#base()
+#malformed()
