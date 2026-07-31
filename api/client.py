@@ -87,7 +87,7 @@ def malformed():
         print(f"Request failed: {e}")
 
 
-#happy_path()
+happy_path()
 #TODO: maybe group all try/except blocks in one negative_testing function?
 #token()
 #endpoint()
