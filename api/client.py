@@ -1,30 +1,44 @@
-import os, requests, json
+import os
+
+import requests
+
+#import json
 from dotenv import load_dotenv
 
 load_dotenv()
-APP_ID = os.getenv("APP_ID")
-INACTIVE_ID = os.getenv("INACTIVE_ID")
+app_id = os.getenv("APP_ID")
+inactive_id = os.getenv("INACTIVE_ID")
 
 baseURL = "https://openexchangerates.org/api/"
-params = {"app_id": APP_ID}
+params = {"app_id": app_id}
 
 def happy_path():
-    """_summary_
-    First we want to test if our token works, we get a code 200,
-    and a few other checks that makes sense for our happy path.
-    The /latest.json endpoint is the simplest one to start with."""
+    """Validate the /latest.json endpoint using a valid API key.
 
-    happy_response = requests.get(f"{baseURL}latest.json", params=params)
+    Checks:
+    - HTTP status
+    - Response time
+    - Required JSON fields
+    - Exchange rate sanity
+    - Currency coverage
+    - Sensitive data leakage
+    """
+
+    happy_response = requests.get(f"{baseURL}latest.json", timeout=5,params=params)
     latest_json = happy_response.json()
 
     #print(json.dumps(latest_json, indent=4))
     assert happy_response.status_code == 200
     assert happy_response.elapsed.total_seconds() < 1
     assert isinstance(latest_json, dict)
-    assert "timestamp" and "base" and "rates" in latest_json
-    assert "GBP" and "EUR" and "JPY" in latest_json["rates"]
+    assert "timestamp" in latest_json
+    assert "rates" in latest_json
+    assert "base" in latest_json
+    assert "GBP" in latest_json["rates"]
+    assert "EUR" in latest_json["rates"]
+    assert "JPY" in latest_json["rates"]
     #data validation
-    assert latest_json["rates"]["GBP"] <= 1.2 and latest_json["rates"]["GBP"] >= 0.4
+    assert 0.4 <= latest_json["rates"]["GBP"] <= 1.2
     assert len(latest_json["rates"]) > 100
     for curr in latest_json["rates"]:
         assert len(curr) == 3
@@ -35,23 +49,22 @@ def happy_path():
                     "api_key"]
     for i in forbidden:
         assert i not in happy_response.text.lower()
-    print("✅ Happy path test passed successfully!")
 
 def token():
     try:
-        depr_token = requests.get(f"{baseURL}latest.json?app_id={INACTIVE_ID}")
+        depr_token = requests.get(f"{baseURL}latest.json?app_id={inactive_id}", timeout=5)
         depr_token.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
     try:
-        null_token = requests.get(f"{baseURL}latest.json?app_id=")
+        null_token = requests.get(f"{baseURL}latest.json?app_id=", timeout=5)
         null_token.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
 
 def endpoint():
     try:
-        fake_endpoint = requests.get(f"{baseURL}ananas.json?app_id={APP_ID}")
+        fake_endpoint = requests.get(f"{baseURL}ananas.json?app_id={app_id}", timeout=5)
         fake_endpoint.raise_for_status()
 
     except requests.exceptions.RequestException as e:
@@ -61,18 +74,17 @@ def subscription():
     # The /ohlc endpoint should only be available to premium members of the API.
     # For this project we only use the free tier.
     try:
-        subscr = requests.get(f"{baseURL}ohlc.json?app_id={APP_ID}")
+        subscr = requests.get(f"{baseURL}ohlc.json?app_id={app_id}", timeout=5)
         subscr.raise_for_status()
         print("Welcome to the VIP Platinum tier!")
 
     except requests.exceptions.RequestException as e:
-        print("Welcome to the VIP Platinum tier!")
         print(f"Request failed: {e}")
 
 def base():
     # Same with changing the base currency rates will be returned at.
     try:
-        invalid_base = requests.get(f"{baseURL}latest.json?app_id={APP_ID}&base=EUR")
+        invalid_base = requests.get(f"{baseURL}latest.json?app_id={app_id}&base=EUR", timeout=5)
         invalid_base.raise_for_status()
     except requests.exceptions.RequestException as e:
         print("This option is only extended to subscribers of the",
@@ -81,7 +93,7 @@ def base():
 
 def malformed():
     try:
-        mal = requests.get(f"http://openexchangerates.org/latest.json?ap_d={APP_ID}&")
+        mal = requests.get(f"http://openexchangerates.org/latest.json?ap_d={app_id}&", timeout=5)
         mal.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
