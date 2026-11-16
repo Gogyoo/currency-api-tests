@@ -39,10 +39,46 @@ and so could not be tested.
 * The pytest commit could benefit from using parameterisation and fixtures.
 * The logging module from the standard Python library could bring interesting features.
 
-🚦 Running it
+🚦 Try it
 ---
+### Installation
 
+Clone the repository:
 
-🍿 Demo
----
-<img src="" width="800" height="640" alt="To be created"/>
+```bash
+git clone https://github.com/Gogyoo/currency-api-tests.git
+cd currency-api-tests
+```
+
+Create a virtual environment:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Configuration
+
+Create an `.env` file in the project root.
+
+Example:
+
+```text
+APP_ID=yourapikeyhere
+```
+
+An API key can be obtained for free here:
+
+https://openexchangerates.org/
+
+### Run
+
+```bash
+pytest -v tests/test_client.py
+```
