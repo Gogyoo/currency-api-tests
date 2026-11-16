@@ -46,46 +46,29 @@ def test_happy_path():
     for i in forbidden:
         assert i not in response.text.lower()
 
-
-def test_token():
-    try:
-        depr_token = get_response("latest.json", params={"app_id": inactive_id})
-        depr_token.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
-    try:
-        null_token = get_response("latest.json", params=None)
-        null_token.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
-
+def test_deprecatedtoken():
+    depr_token = get_response("latest.json", params={"app_id": inactive_id})
+    assert depr_token.status_code == 401
+def test_nulltoken():
+    null_token = get_response("latest.json", params=None)
+    assert null_token.status_code == 403
 
 def test_endpoint():
-    try:
-        fake_endpoint = get_response("ananas.json", params=params)
-        fake_endpoint.raise_for_status()
-
-    except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
-
+    fake_endpoint = get_response("ananas.json", params=params)
+    assert fake_endpoint.status_code == 404
 
 def test_subscription():
     # The /ohlc endpoint should only be available to premium members of the API.
     # For this project we only use the free tier.
-    try:
-        subscr = get_response("ohlc.json", params=params)
-        subscr.raise_for_status()
-        print("Welcome to the VIP Platinum tier!")
-
-    except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
-
+    subscr = get_response("ohlc.json", params=params)
+    print(subscr.status_code)
+    assert subscr.status_code == 403
 
 def test_base():
     # Same with changing the base currency rates will be returned at.
     try:
         invalid_base = get_response(
-            "latest.json", params={"app_id": app_id, "change_base": "&base='EUR'"}
+            "latest.json", params={"app_id": app_id, "base": "EUR"}
         )
         invalid_base.raise_for_status()
     except requests.exceptions.RequestException as e:
@@ -97,10 +80,5 @@ def test_base():
 
 
 def test_malformed():
-    try:
-        mal = requests.get(
-            f"http://openexchangerates.org/latest.json?ap_d={app_id}&", timeout=5
-        )
-        mal.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
+    mal = get_response("latest.json",params={"ap_d":app_id}, timeout=5)
+    assert mal.status_code == 403
