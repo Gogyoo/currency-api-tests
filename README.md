@@ -36,6 +36,8 @@ I can then start to think about inserting modules in requirements.txt and secret
 ---
 * The free version of the API being limited to 1000 HTTP requests/month, the `/time-series.json` endpoint would go through that allowance very quickly,
 and so could not be tested.
+* The pytest commit could benefit from using parameterisation and fixtures.
+* The logging module from the standard Python library could bring interesting features.
 
 🚦 Running it
 ---

@@ -11,7 +11,7 @@ inactive_id = os.getenv("INACTIVE_ID")
 params = {"app_id": app_id}
 
 
-def happy_path():
+def test_happy_path():
     """Validate the /latest.json endpoint using a valid API key.
 
     Checks:
@@ -23,7 +23,7 @@ def happy_path():
     - Sensitive data leakage
     """
 
-    response = get_response("latest.json", timeout=1, params=params)
+    response = get_response("latest.json", timeout=2, params=params)
     latest_json = response.json()
 
     # print(json.dumps(latest_json, indent=4))
@@ -47,7 +47,7 @@ def happy_path():
         assert i not in response.text.lower()
 
 
-def token():
+def test_token():
     try:
         depr_token = get_response("latest.json", params={"app_id": inactive_id})
         depr_token.raise_for_status()
@@ -60,7 +60,7 @@ def token():
         print(f"Request failed: {e}")
 
 
-def endpoint():
+def test_endpoint():
     try:
         fake_endpoint = get_response("ananas.json", params=params)
         fake_endpoint.raise_for_status()
@@ -69,7 +69,7 @@ def endpoint():
         print(f"Request failed: {e}")
 
 
-def subscription():
+def test_subscription():
     # The /ohlc endpoint should only be available to premium members of the API.
     # For this project we only use the free tier.
     try:
@@ -81,7 +81,7 @@ def subscription():
         print(f"Request failed: {e}")
 
 
-def base():
+def test_base():
     # Same with changing the base currency rates will be returned at.
     try:
         invalid_base = get_response(
@@ -96,7 +96,7 @@ def base():
         print(f"Request failed: {e}")
 
 
-def malformed():
+def test_malformed():
     try:
         mal = requests.get(
             f"http://openexchangerates.org/latest.json?ap_d={app_id}&", timeout=5
@@ -106,9 +106,9 @@ def malformed():
         print(f"Request failed: {e}")
 
 
-happy_path()
-# token()
-# endpoint()
-# subscription()
-# base()
-# malformed()
+#happy_path()
+#token()
+#endpoint()
+#subscription()
+#base()
+#malformed()
