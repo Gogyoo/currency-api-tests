@@ -104,11 +104,3 @@ def test_malformed():
         mal.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
-
-
-#happy_path()
-#token()
-#endpoint()
-#subscription()
-#base()
-#malformed()

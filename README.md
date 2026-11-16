@@ -31,6 +31,7 @@ then deleted the Github repo, as I was only one commit in.
 * To not have to deal with this in the future and with the help of a chatbot, I prepared a shell script that takes a string as an argument (the project name),
 then initialises the project with the most basic elements of a skeleton structure. It ensures the .gitignore with typical values is included in the first commit.
 I can then start to think about inserting modules in requirements.txt and secrets in .env.
+* pytest as a library was a brand new thing for me, and I still have to explore all it has to offer.
 
 💭 How can it be improved?
 ---
